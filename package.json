@@ -1,0 +1,13 @@
+{
+  "name": "bapteme-josephine-photos",
+  "version": "1.0.0",
+  "description": "Photo upload app for Josephine's baptism",
+  "private": true,
+  "workspaces": [
+    "back",
+    "front"
+  ],
+  "scripts": {
+    "install-all": "npm install && cd back && npm install && cd ../front && npm install"
+  }
+}
