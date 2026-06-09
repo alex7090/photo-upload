@@ -139,6 +139,62 @@ h1 {
   border: 1px solid var(--error);
 }
 
+.carousel-section {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid var(--border);
+}
+
+.carousel-section h2 {
+  font-size: 1.5rem;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.photos-carousel {
+  max-width: 100%;
+  height: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.photos-carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--primary);
+  background: rgba(255, 255, 255, 0.8);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-pagination-bullet {
+  background: var(--primary);
+}
+
+.photo-count {
+  text-align: center;
+  color: var(--text-light);
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.loading-text {
+  text-align: center;
+  color: var(--text-light);
+  margin-top: 20px;
+  font-style: italic;
+}
+
 @media (max-width: 600px) {
   .card {
     padding: 24px;
