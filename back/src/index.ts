@@ -78,7 +78,6 @@ app.post('/api/upload', upload.array('photos', 100), async (req: Request, res: R
         originalName: file.originalname,
         size: file.size,
         uploadedAt: new Date(),
-        url: `https://${bucketName}.s3.amazonaws.com/${uniqueFilename}`,
       });
     }
 
@@ -96,18 +95,29 @@ app.post('/api/upload', upload.array('photos', 100), async (req: Request, res: R
   }
 });
 
-// Get files list
+// Get files list with signed URLs
 app.get('/api/files', async (req: Request, res: Response) => {
   try {
     const params = { Bucket: bucketName };
     const data = await s3.listObjects(params).promise();
 
-    const filesList = (data.Contents || []).map((file) => ({
-      name: file.Key,
-      url: `https://${bucketName}.s3.amazonaws.com/${file.Key}`,
-      size: file.Size,
-      updated: file.LastModified,
-    }));
+    const filesList = await Promise.all(
+      (data.Contents || []).map(async (file) => {
+        // Generate a signed URL valid for 1 hour
+        const signedUrl = await s3.getSignedUrlPromise('getObject', {
+          Bucket: bucketName,
+          Key: file.Key,
+          Expires: 3600, // 1 hour
+        });
+
+        return {
+          name: file.Key,
+          url: signedUrl,
+          size: file.Size,
+          updated: file.LastModified,
+        };
+      })
+    );
 
     res.json({ files: filesList });
   } catch (error) {
